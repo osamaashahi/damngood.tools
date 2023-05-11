@@ -167,7 +167,7 @@ export function ChatPDF() {
                     className="hidden"
                     onChange={uploadFile}
                 />
-                <div className="flex flex-row items-center gap-4">
+                <div className="flex flex-col md:flex-row md:items-center gap-4">
                     <Button
                         disabled={loading}
                         onClick={(e) => {
