@@ -167,28 +167,31 @@ export function ChatPDF() {
                     className="hidden"
                     onChange={uploadFile}
                 />
-                <Button
-                    disabled={loading}
-                    onClick={(e) => {
-                        e.preventDefault()
-                        pdfRef?.current?.click()
-                    }}
-                >
-                    {loading ? (
-                        <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Please wait
-                        </>
-                    ) : (
-                        <>
-                            <FileUp className="mr-2 h-4 w-4" /> Upload{" "}
-                            {chatId ? "another" : "your"} PDF
-                        </>
-                    )}
-                </Button>
-                <div className="mt-2 text-sm">
-                    Don't close the browser tab to lose the chat. <br /> The
-                    chat with your PDF is available for the next 24 hours.
+                <div className="flex flex-row items-center gap-4">
+                    <Button
+                        disabled={loading}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            pdfRef?.current?.click()
+                        }}
+                    >
+                        {loading ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Please wait
+                            </>
+                        ) : (
+                            <>
+                                <FileUp className="mr-2 h-4 w-4" /> Upload{" "}
+                                {chatId ? "another" : "your"} PDF
+                            </>
+                        )}
+                    </Button>
+                    <div className="text-sm max-w-[400px] text-muted-foreground">
+                        {
+                            "Don't close the browser tab to lose the chat. The chat with your PDF is available for the next 24 hours."
+                        }
+                    </div>
                 </div>
                 {fileValidationError && (
                     <Alert variant="destructive" className="mt-2 w-[300px]">
