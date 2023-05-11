@@ -5,11 +5,10 @@ import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
+import { Analytics } from "@/components/analytics"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
-import Script from "next/script"
-import { Analytics } from "@/components/analytics"
 
 export const metadata: Metadata = {
     title: {
@@ -42,7 +41,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                         "min-h-screen bg-background font-sans antialiased",
                         fontSans.variable
                     )}
-                >                  
+                >
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="system"

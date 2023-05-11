@@ -1,7 +1,6 @@
 import Link from "next/link"
-import { Aperture, FileCog2, FileType, Globe, Image } from "lucide-react"
+import { Aperture, FileCog2, FileSearch, FileType } from "lucide-react"
 
-import { Separator } from "@/components/ui/separator"
 import { PageHeader } from "@/components/page-header"
 
 export default function IndexPage() {
@@ -27,6 +26,13 @@ export default function IndexPage() {
             icon: <FileType />,
             link: "/tools/detect-fonts",
         },
+        {
+            name: "PDF Chat",
+            description:
+                "Upload a PDF file and ask any questions about it. Let AI answer them.",
+            icon: <FileSearch />,
+            link: "/tools/chat-pdf",
+        },
     ]
 
     return (
@@ -35,9 +41,9 @@ export default function IndexPage() {
                 heading="Oh, these damn good tools"
                 subheading="Easy-to-use, fun tools—free (and open-source)."
             />
-            <div className="mt-10 flex max-w-[700px] flex-col gap-10">
+            <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2">
                 {tools.map((tool, idx) => (
-                    <div key={idx}>
+                    <div key={idx} className="p-4">
                         <Link
                             href={tool.link}
                             className="flex flex-row gap-2 text-primary"
@@ -50,7 +56,6 @@ export default function IndexPage() {
                         <p className="ml-8 mt-2 text-muted-foreground">
                             {tool.description}
                         </p>
-                        <Separator className="mt-4" />
                     </div>
                 ))}
             </div>

@@ -1,4 +1,14 @@
-export const screenshotExampleUrl = "https://example.com";
+export type PDFPage = {
+    textContent: string
+    page: number
+}
+
+export type PDFChatQuestion = {
+    question: string
+    chatId: string
+}
+
+export const screenshotExampleUrl = "https://example.com"
 
 export type Screenshot = {
     url: string
@@ -9,7 +19,7 @@ export type Screenshot = {
 
 export type UrlDataFont = {
     first: string
-    fallback: string[],
+    fallback: string[]
     elements: string[]
 }
 
