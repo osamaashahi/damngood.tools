@@ -1,16 +1,17 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "DamnGood.Tools",
-  description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
-  mainNav: [
-    {
-      title: "All tools",
-      href: "/",
+    name: "DamnGood.Tools",
+    description:
+        "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    mainNav: [
+        {
+            title: "All tools",
+            href: "/",
+        },
+    ],
+    links: {
+        twitter: "https://twitter.com/DmytroKrasun",
+        github: "https://github.com/krasun/damngood.tools",
     },
-  ],
-  links: {    
-    github: "https://github.com/krasun/damngood.tools",
-  },
 }
