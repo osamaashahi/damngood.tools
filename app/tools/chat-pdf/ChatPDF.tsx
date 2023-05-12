@@ -167,7 +167,7 @@ export function ChatPDF() {
                     className="hidden"
                     onChange={uploadFile}
                 />
-                <div className="flex flex-col md:flex-row md:items-center gap-4">
+                <div className="flex flex-col gap-4 md:flex-row md:items-center">
                     <Button
                         disabled={loading}
                         onClick={(e) => {
@@ -187,7 +187,7 @@ export function ChatPDF() {
                             </>
                         )}
                     </Button>
-                    <div className="text-sm max-w-[400px] text-muted-foreground">
+                    <div className="max-w-[400px] text-sm text-muted-foreground">
                         {
                             "Don't close the browser tab to lose the chat. The chat with your PDF is available for the next 24 hours."
                         }
