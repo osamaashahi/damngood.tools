@@ -6,7 +6,7 @@ export default async function SummarizeAnyURLPage() {
     return (
         <>
             <PageHeader
-                heading="Get summary for any URL"
+                heading="Summarize any URL"
                 subheading="Quickly summarize any website or URL."
             />
             <SummarizeAnyURL />
