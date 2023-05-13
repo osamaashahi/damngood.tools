@@ -5,6 +5,7 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
 
 const model = new OpenAI({
     temperature: 0,
+    modelName: "gpt-3.5-turbo",
     openAIApiKey: process.env.OPENAI_API_KEY,
 })
 
