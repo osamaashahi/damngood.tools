@@ -11,6 +11,7 @@
     "preview": "next build && next start",
     "typecheck": "tsc --noEmit",
     "gpt4all:download": "npx ts-node --project tsconfig.json --compiler-options {\\\"module\\\":\\\"CommonJS\\\"} ./scripts/gpt4all/download.ts",
+    "gpt4all:hello": "npx ts-node --project tsconfig.json --compiler-options {\\\"module\\\":\\\"CommonJS\\\"} ./scripts/gpt4all/hello.ts",
     "jobs": "npx ts-node --project tsconfig.json --compiler-options {\\\"module\\\":\\\"CommonJS\\\"} ./scripts/jobs.ts",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
