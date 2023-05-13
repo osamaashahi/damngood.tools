@@ -17,7 +17,7 @@ const embeddingModel = new OpenAIEmbeddings({
     openAIApiKey: process.env.OPENAI_API_KEY,
 })
 const textSplitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 1000,
+    chunkSize: 4000,
     chunkOverlap: 20,
 })
 

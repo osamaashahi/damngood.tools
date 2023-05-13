@@ -11,9 +11,12 @@ const model = new OpenAI({
 
 export async function generateSummary(url: string) {
     const loader = new CheerioWebBaseLoader(url)
-    
-    const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 1000 });
-    const docs = await textSplitter.splitDocuments(await loader.load());
+
+    const textSplitter = new RecursiveCharacterTextSplitter({
+        chunkSize: 4000,
+        chunkOverlap: 20,
+    })
+    const docs = await textSplitter.splitDocuments(await loader.load())
 
     const chain = loadSummarizationChain(model, { type: "map_reduce" })
     const res = await chain.call({
