@@ -8,6 +8,10 @@ export type PDFChatQuestion = {
     chatId: string
 }
 
+export type ChatPrompt = {
+    prompt: string
+}
+
 export const screenshotExampleUrl = "https://example.com"
 
 export type SummarizationResult = {

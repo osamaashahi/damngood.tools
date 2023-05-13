@@ -1,6 +1,7 @@
 import Link from "next/link"
 import {
     Aperture,
+    Bot,
     FileCog2,
     FileSearch,
     FileText,
@@ -33,7 +34,7 @@ export default function IndexPage() {
             link: "/tools/detect-fonts",
         },
         {
-            name: "PDF Chat",
+            name: "Chat with any PDF",
             description:
                 "Upload a PDF file and ask any questions about it. Let AI answer them.",
             icon: <FileSearch />,
@@ -44,6 +45,13 @@ export default function IndexPage() {
             description: "Quickly summarize any website or URL.",
             icon: <FileText />,
             link: "/tools/summarize-any-url",
+        },
+        {
+            name: "GPT4All Chat",
+            description:
+                "Chat with an free and open-source alternative GPT model.",
+            icon: <Bot />,
+            link: "/tools/gpt4all-chat",
         },
     ]
 

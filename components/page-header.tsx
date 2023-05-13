@@ -1,6 +1,6 @@
 type PageProps = {
     heading: string
-    subheading: string
+    subheading: string|React.ReactNode
 }
 
 export function PageHeader({ heading, subheading }: PageProps) {
