@@ -47,7 +47,7 @@ export function Chat({ model }: ChatProps) {
     const [chatInteractions, setChatInteractions] = useState<ChatInteraction[]>(
         [
             {
-                message: `Hey, hey. You are chatting with GPT4All—a free and open-source alternative to many proprietary and commercial GPTs. Try to prompt and see what happens.`,
+                message: `Hey, hey 👋 You are chatting with GPT4All—a free and open-source alternative to many proprietary and commercial GPTs. Try to prompt and see what happens.`,
                 isBot: true,
             },
         ]
@@ -75,7 +75,7 @@ export function Chat({ model }: ChatProps) {
                 { isBot: true, message: answer },
             ])
             setQuestion("")
-
+            
             return
         }
 

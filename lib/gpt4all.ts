@@ -5,7 +5,7 @@ if (!process.env.GPT4ALL_MODEL) {
 }
 const model = process.env.GPT4ALL_MODEL
 
-class GPT4AllInitializer {
+export class GPT4AllInitializer {
     private open: boolean
     private gpt4all: GPT4All
 
@@ -16,7 +16,7 @@ class GPT4AllInitializer {
 
     async initialize() {
         if (!this.open) {
-            await this.gpt4all.init()
+            await this.gpt4all.init(false)
             await this.gpt4all.open()
             this.open = true
         }
@@ -25,4 +25,12 @@ class GPT4AllInitializer {
     }
 }
 
-export default new GPT4AllInitializer()
+const globalForGPT4All = global as unknown as {
+    gpt4all: GPT4AllInitializer | undefined
+}
+
+const gpt4all = globalForGPT4All.gpt4all ?? new GPT4AllInitializer()
+
+if (process.env.NODE_ENV !== "production") globalForGPT4All.gpt4all = gpt4all
+
+export default gpt4all
