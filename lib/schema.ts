@@ -12,6 +12,11 @@ export type GenerateScreenshotsRequest = z.infer<
     typeof GenerateScreenshotsRequestSchema
 >
 
+export const SummarizeURLRequestSchema = z.object({
+    website: z.string().url(),
+})
+export type SummarizeURLRequest = z.infer<typeof SummarizeURLRequestSchema>
+
 export const PrivacyPolicyRequestSchema = z.object({
     companyName: z.optional(z.string()),
     productName: z.optional(z.string()),

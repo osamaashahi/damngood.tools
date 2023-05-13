@@ -1,5 +1,11 @@
 import Link from "next/link"
-import { Aperture, FileCog2, FileSearch, FileType } from "lucide-react"
+import {
+    Aperture,
+    FileCog2,
+    FileSearch,
+    FileText,
+    FileType,
+} from "lucide-react"
 
 import { PageHeader } from "@/components/page-header"
 
@@ -32,6 +38,12 @@ export default function IndexPage() {
                 "Upload a PDF file and ask any questions about it. Let AI answer them.",
             icon: <FileSearch />,
             link: "/tools/chat-pdf",
+        },
+        {
+            name: "Summarize any URL",
+            description: "Quickly summarize any website or URL.",
+            icon: <FileText />,
+            link: "/tools/summarize-any-url",
         },
     ]
 

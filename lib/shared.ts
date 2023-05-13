@@ -10,6 +10,10 @@ export type PDFChatQuestion = {
 
 export const screenshotExampleUrl = "https://example.com"
 
+export type SummarizationResult = {
+    text: string
+}
+
 export type Screenshot = {
     url: string
     viewportWidth: number
