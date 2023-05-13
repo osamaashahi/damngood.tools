@@ -46,13 +46,13 @@ export default function IndexPage() {
             icon: <FileText />,
             link: "/tools/summarize-any-url",
         },
-        {
-            name: "GPT4All Chat",
-            description:
-                "Chat with an free and open-source alternative GPT model.",
-            icon: <Bot />,
-            link: "/tools/gpt4all-chat",
-        },
+        // {
+        //     name: "GPT4All Chat",
+        //     description:
+        //         "Chat with an free and open-source alternative GPT model.",
+        //     icon: <Bot />,
+        //     link: "/tools/gpt4all-chat",
+        // },
     ]
 
     return (

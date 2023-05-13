@@ -6,12 +6,13 @@ import { ChatPrompt } from "@/lib/shared"
 export async function POST(request: NextRequest) {
     try {
         const chatPrompt = (await request.json()) as ChatPrompt
-        const result = await prompt(chatPrompt.prompt)
+        throw new Error('not implemented');
+        // const result = await prompt(chatPrompt.prompt)
 
-        return NextResponse.json({
-            success: true,
-            result,
-        })
+        // return NextResponse.json({
+        //     success: true,
+        //     result,
+        // })
     } catch (error) {
         console.log(error)
 
