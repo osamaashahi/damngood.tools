@@ -1,13 +1,6 @@
 import "../load-env"
-import { exec } from "child_process"
-import fs, { promises as fsAsync } from "fs"
-import { chmod, chown } from "fs/promises"
-import os from "os"
 import { exit } from "process"
-import { promisify } from "util"
-import axios from "axios"
 import { GPT4All } from "gpt4all"
-import ProgressBar from "progress"
 
 if (!process.env.GPT4ALL_MODEL) {
     throw new Error("Please, specify the `GPT4ALL_MODEL` environment variable")
@@ -15,7 +8,7 @@ if (!process.env.GPT4ALL_MODEL) {
 const model = process.env.GPT4ALL_MODEL
 
 async function main() {
-    const gpt4all = new GPT4All(process.env.GPT4ALL_MODEL, false)
+    const gpt4all = new GPT4All(model, false)
 
     await gpt4all.init(false)
     await gpt4all.open()
@@ -27,63 +20,6 @@ async function main() {
     }
 
     await gpt4all.close()
-}
-
-async function resolveExecutableURL() {
-    const platform = os.platform()
-
-    if (platform === "darwin") {
-        const { stdout } = await promisify(exec)("uname -m")
-        if (stdout.trim() === "arm64") {
-            return `https://github.com/nomic-ai/gpt4all/blob/main/gpt4all-training/chat/${model}-OSX-m1?raw=true`
-        } else {
-            return `https://github.com/nomic-ai/gpt4all/blob/main/gpt4all-training/chat/${model}-OSX-intel?raw=true`
-        }
-    } else if (platform === "linux") {
-        return `https://github.com/nomic-ai/gpt4all/blob/main/gpt4all-training/chat/${model}-linux-x86?raw=true`
-    } else if (platform === "win32") {
-        return `https://github.com/nomic-ai/gpt4all/blob/main/gpt4all-training/chat/${model}-win64.exe?raw=true`
-    }
-
-    throw new Error(
-        `Your platform is not supported: ${platform}. Current binaries supported are for OSX (ARM and Intel), Linux and Windows.`
-    )
-}
-
-async function downloadFile(url: string, destination: string): Promise<void> {
-    const { data, headers } = await axios.get(url, { responseType: "stream" })
-    const totalSize = parseInt(headers["content-length"], 10)
-    const progressBar = new ProgressBar("[:bar] :percent :etas", {
-        complete: "=",
-        incomplete: " ",
-        width: 20,
-        total: totalSize,
-    })
-    const dir = new URL(`file://${os.homedir()}/.nomic/`)
-    await fsAsync.mkdir(dir, { recursive: true })
-
-    const writer = fs.createWriteStream(destination)
-
-    data.on("data", (chunk: any) => {
-        progressBar.tick(chunk.length)
-    })
-
-    data.pipe(writer)
-
-    return new Promise((resolve, reject) => {
-        writer.on("finish", resolve)
-        writer.on("error", reject)
-    })
-}
-
-async function fileExists(path: string) {
-    try {
-        await fsAsync.access(path, fs.constants.F_OK)
-
-        return true
-    } catch (err) {
-        return false
-    }
 }
 
 main()
