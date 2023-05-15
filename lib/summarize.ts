@@ -16,7 +16,7 @@ export async function generateSummary(url: string) {
         chunkSize: 4000,
         chunkOverlap: 20,
     })
-    const docs = await textSplitter.splitDocuments(await loader.load())
+    let docs = (await textSplitter.splitDocuments(await loader.load())).slice(0, 2)
 
     const chain = loadSummarizationChain(model, { type: "map_reduce" })
     const res = await chain.call({
