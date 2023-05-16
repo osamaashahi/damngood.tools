@@ -18,6 +18,11 @@ export type SummarizationResult = {
     text: string
 }
 
+export type GrammarFixResult = {
+    text: string
+    sourceText: string
+}
+
 export type Screenshot = {
     url: string
     viewportWidth: number

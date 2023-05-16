@@ -2,6 +2,7 @@ import Link from "next/link"
 import {
     Aperture,
     Bot,
+    FileCheck,
     FileCog2,
     FileSearch,
     FileText,
@@ -13,7 +14,7 @@ import { PageHeader } from "@/components/page-header"
 export default function IndexPage() {
     const tools = [
         {
-            name: "Privacy Policy",
+            name: "Privacy policy",
             description:
                 "Generate privacy policy in a few seconds according to your preferences.",
             icon: <FileCog2 />,
@@ -45,6 +46,12 @@ export default function IndexPage() {
             description: "Quickly summarize any website or URL.",
             icon: <FileText />,
             link: "/tools/summarize-any-url",
+        },
+        {
+            name: "Grammar fixer",
+            description: "Fix the grammar of any text in one click.",
+            icon: <FileCheck />,
+            link: "/tools/grammar-fixer",
         },
         // {
         //     name: "GPT4All Chat",

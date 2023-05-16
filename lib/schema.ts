@@ -17,6 +17,11 @@ export const SummarizeURLRequestSchema = z.object({
 })
 export type SummarizeURLRequest = z.infer<typeof SummarizeURLRequestSchema>
 
+export const FixGrammarRequestSchema = z.object({
+    text: z.string().max(2048),
+})
+export type FixGrammarRequest = z.infer<typeof FixGrammarRequestSchema>
+
 export const PrivacyPolicyRequestSchema = z.object({
     companyName: z.optional(z.string()),
     productName: z.optional(z.string()),
