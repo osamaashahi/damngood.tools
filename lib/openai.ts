@@ -1,15 +1,20 @@
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi } from "openai"
+
 const configuration = new Configuration({
     organization: process.env.OPENAI_ORGANIZATION_ID,
     apiKey: process.env.OPENAI_API_KEY,
-});
+})
 
-export const openAIApi = new OpenAIApi(configuration);
+export const openAIApi = new OpenAIApi(configuration)
 
-export const askOpenAIApi = async (prompt: string) => {
+export const askOpenAIApi = async (prompt: string, systemMessage?: string) => {
+    const systemMessages: { role: "system"; content: string }[] =
+        systemMessage && systemMessage.length > 0
+            ? [{ role: "system", content: systemMessage }]
+            : []
     const response = await openAIApi.createChatCompletion({
         model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
+        messages: [...systemMessages, { role: "user", content: prompt }],
     })
 
     for (const choice of response.data.choices) {
@@ -24,4 +29,3 @@ export const askOpenAIApi = async (prompt: string) => {
 
     return null
 }
-
