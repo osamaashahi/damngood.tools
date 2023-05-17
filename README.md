@@ -2,6 +2,8 @@
 
 A set of damn good tools built for fun, to play with Next.js and to catch up with the latest AI technologies. 
 
+![Chat with any PDF](chat_with_any_pdf.jpg)
+
 Available tools: 
 
 * [Privacy policy generation](https://damngood.tools/tools/privacy-policy-generator);
