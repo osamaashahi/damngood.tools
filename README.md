@@ -26,7 +26,6 @@ The goal of this project for me is to have fun and explore my creativity. Expect
 * [OpenAI APIs](https://platform.openai.com/docs/api-reference) for AI-based tools.
 * [ScreenshotOne](https://screenshotone.com/) for rendering website screenshots.
 * [GetURLData](https://geturldata.com/) for extracting website fonts and metadata.
-* [GetURLData](https://geturldata.com/) for extracting website fonts and metadata.
 * [shadcn/ui](https://ui.shadcn.com/) is a beautifully designed component library.
 
 ## License
