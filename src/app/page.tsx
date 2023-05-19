@@ -7,6 +7,7 @@ import {
     FileSearch,
     FileText,
     FileType,
+    MessageSquare,
 } from "lucide-react"
 
 import { PageHeader } from "@/components/page-header"
@@ -52,6 +53,13 @@ export default function IndexPage() {
             description: "Fix the grammar of any text in one click.",
             icon: <FileCheck />,
             link: "/tools/grammar-fixer",
+        },
+        {
+            name: "Damn Good Chat",
+            description:
+                "A better ChatGPT alternative that supports superb ChatGPT plugins.",
+            icon: <MessageSquare />,
+            link: "/tools/damn-good-chat",
         },
         // {
         //     name: "GPT4All Chat",

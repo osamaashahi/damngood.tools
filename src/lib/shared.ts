@@ -1,3 +1,8 @@
+export type Plugin = {
+    name: string
+    description: string
+}
+
 export type PDFPage = {
     textContent: string
     page: number
@@ -10,6 +15,7 @@ export type PDFChatQuestion = {
 
 export type ChatPrompt = {
     prompt: string
+    apiKey?: string
 }
 
 export const screenshotExampleUrl = "https://example.com"
