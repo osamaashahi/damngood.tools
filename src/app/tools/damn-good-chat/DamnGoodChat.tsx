@@ -150,7 +150,7 @@ export function DamnGoodChat({ plugins }: DamnGoodChatProps) {
                                 <AlertDialogDescription>
                                     <div>
                                         This tool requires your OpenAI API key.
-                                        It won't be stored at the DamnGood.Tools servers, only
+                                        It will not be stored at the DamnGood.Tools servers, only
                                         temporarily on this page.
                                     </div>
                                     <div className="mt-2">
