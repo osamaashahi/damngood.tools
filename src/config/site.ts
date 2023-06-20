@@ -11,6 +11,7 @@ export const siteConfig = {
         },
     ],
     links: {
+        signIn: "/sign-in",
         twitter: "https://twitter.com/DmytroKrasun",
         github: "https://github.com/krasun/damngood.tools",
     },

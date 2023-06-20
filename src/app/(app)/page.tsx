@@ -10,9 +10,12 @@ import {
     MessageSquare,
 } from "lucide-react"
 
+import { getCurrentUser } from "@/lib/session"
 import { PageHeader } from "@/components/page-header"
 
-export default function IndexPage() {
+export default async function IndexPage() {
+    const u = await getCurrentUser()
+
     const tools = [
         {
             name: "Privacy policy",
