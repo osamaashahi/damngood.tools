@@ -32,9 +32,15 @@ const FormatSelect = forwardRef(
                     <SelectValue placeholder="Format" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="plain_text">Plain text</SelectItem>
-                    <SelectItem value="markdown">Markdown</SelectItem>
-                    <SelectItem value="html">HTML</SelectItem>
+                    <SelectItem key="plain_text" value="plain_text">
+                        Plain text
+                    </SelectItem>
+                    <SelectItem key="markdown" value="markdown">
+                        Markdown
+                    </SelectItem>
+                    <SelectItem key="html" value="html">
+                        HTML
+                    </SelectItem>
                 </SelectContent>
             </Select>
         )

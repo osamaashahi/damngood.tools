@@ -1,6 +1,6 @@
 import * as screenshotone from "screenshotone-api-sdk"
 
-import { Screenshot, screenshotDevices, screenshotExampleUrl } from "./shared"
+import { Screenshot, ScrollingScreenshot, screenshotDevices, screenshotExampleUrl } from "./shared"
 
 const globalForScreenshotOne = global as unknown as {
     screenshotoneClient: screenshotone.Client
@@ -55,6 +55,37 @@ export function screenshotUrl(
     return screenshotoneClient.generateSignedTakeURL(options)
 }
 
+export function scrollingScreenshotUrl(
+    url: string,
+    viewportWidth: number,
+    viewportHeight: number,
+    deviceScaleFactor: number,
+    format: string
+) {
+    const cacheKey =
+        url == screenshotExampleUrl
+            ? "example"
+            : new String(new Date().getTime()).toString()
+    const cacheTtl = url == screenshotExampleUrl ? 2592000 : 14400
+
+    const options = screenshotone.AnimateOptions.url(url)
+        .blockChats(true)
+        .blockCookieBanners(true)
+        .blockAds(true)
+        .cache(true)
+        .blockBannersByHeuristics(false)
+        .cacheKey(cacheKey)
+        .cacheTtl(cacheTtl)
+        .reducedMotion(true)
+        .viewportWidth(viewportWidth)
+        .viewportHeight(viewportHeight)
+        .deviceScaleFactor(deviceScaleFactor)
+        .scenario("scroll")
+        .format(format)
+
+    return screenshotoneClient.generateSignedAnimateURL(options)
+}
+
 export async function generateExampleScreenshots(): Promise<Screenshot[]> {
     return await generateScreenshots(screenshotExampleUrl)
 }
@@ -74,6 +105,30 @@ export async function generateFullPageScreenshots(
                     d.deviceScaleFactor,
                     true
                 ),
+                viewportWidth: d.viewportWidth,
+                viewportHeight: d.viewportHeight,
+                device: d.name,
+            }
+        })
+}
+
+export async function generateScrollingScreenshots(
+    url: string,
+    deviceNames: string[],
+    format: string
+): Promise<ScrollingScreenshot[]> {
+    return screenshotDevices
+        .filter((d) => deviceNames.includes(d.name))
+        .map((d) => {
+            return {
+                url: scrollingScreenshotUrl(
+                    url,
+                    d.viewportWidth,
+                    d.viewportHeight,
+                    d.deviceScaleFactor,
+                    format
+                ),
+                format: format,
                 viewportWidth: d.viewportWidth,
                 viewportHeight: d.viewportHeight,
                 device: d.name,

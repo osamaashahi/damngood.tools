@@ -36,6 +36,14 @@ export type Screenshot = {
     device: string
 }
 
+export type ScrollingScreenshot = {
+    url: string
+    viewportWidth: number
+    viewportHeight: number
+    device: string
+    format: string
+}
+
 export type UrlDataFont = {
     first: string
     fallback: string[]

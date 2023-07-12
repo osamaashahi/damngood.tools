@@ -7,6 +7,7 @@ import {
     FileSearch,
     FileText,
     FileType,
+    FileVideo,
     MessageSquare,
     Monitor,
 } from "lucide-react"
@@ -37,6 +38,13 @@ export default async function IndexPage() {
             description: "Render a full-page screenshot of any website.",
             icon: <Monitor />,
             link: "/tools/full-page-screenshots",
+        },
+        {
+            name: "Scrolling screenshots",
+            description:
+                "Render a scrolling animated screenshot of any website.",
+            icon: <FileVideo />,
+            link: "/tools/scrolling-screenshots",
         },
         {
             name: "Fonts",

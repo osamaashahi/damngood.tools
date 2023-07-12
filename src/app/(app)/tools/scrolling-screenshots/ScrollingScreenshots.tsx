@@ -8,10 +8,14 @@ import { ExternalLink, Loader2 } from "lucide-react"
 import { Controller, useForm } from "react-hook-form"
 
 import {
-    GenerateFullPageScreenshotRequest,
-    GenerateFullPageScreenshotRequestSchema,
+    GenerateScrollingScreenshotRequest,
+    GenerateScrollingScreenshotRequestSchema,
 } from "@/lib/schema"
-import { Screenshot as ScreenshotData, screenshotDevices } from "@/lib/shared"
+import {
+    Screenshot as ScreenshotData,
+    ScrollingScreenshot,
+    screenshotDevices,
+} from "@/lib/shared"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -37,7 +41,9 @@ const DeviceSelect = forwardRef(
                 </SelectTrigger>
                 <SelectContent>
                     {screenshotDevices.map((d) => (
-                        <SelectItem value={d.name}>{d.name}</SelectItem>
+                        <SelectItem key={d.name} value={d.name}>
+                            {d.name}
+                        </SelectItem>
                     ))}
                 </SelectContent>
             </Select>
@@ -45,6 +51,33 @@ const DeviceSelect = forwardRef(
     }
 )
 DeviceSelect.displayName = "DeviceSelect"
+
+const FormatSelect = forwardRef(
+    (
+        { ...props }: SelectProps & { forwardedRef: Ref<HTMLButtonElement> },
+        forwardedRef: Ref<HTMLButtonElement>
+    ) => {
+        return (
+            <Select {...props}>
+                <SelectTrigger className="w-full" ref={forwardedRef}>
+                    <SelectValue placeholder="Format" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem key="mp4" value="mp4">
+                        MP4
+                    </SelectItem>
+                    <SelectItem key="gif" value="gif">
+                        GIF
+                    </SelectItem>
+                    <SelectItem key="webm" value="webm">
+                        WebM
+                    </SelectItem>
+                </SelectContent>
+            </Select>
+        )
+    }
+)
+FormatSelect.displayName = "FormatSelect"
 
 const ScreenshotPlaceholder = () => {
     return (
@@ -65,6 +98,7 @@ type ScreenshotProps = {
     viewportHeight: number
     device: string
     url: string
+    format: string
 }
 
 const Screenshot = ({
@@ -72,6 +106,7 @@ const Screenshot = ({
     viewportHeight,
     device,
     url,
+    format,
 }: ScreenshotProps) => {
     const [loaded, setLoaded] = useState(false)
 
@@ -90,54 +125,86 @@ const Screenshot = ({
                 </Link>
             </div>
             <div className="mt-4 ">
+                {format == "mp4" || format == "webm" ? (
+                    <Link href={url} target="_black">
+                        <video
+                            autoPlay
+                            loop
+                            muted
+                            ref={(input) => {
+                                if (!input) {
+                                    return
+                                }
+
+                                const video = input
+
+                                const updateFunc = () => {
+                                    setLoaded(true)
+                                }
+                                video.onloadeddata = updateFunc
+                                if (video.readyState >= 2) {
+                                    updateFunc()
+                                }
+                            }}
+                        >
+                            <source src={url} type={`video/${format}`} />
+                        </video>
+                    </Link>
+                ) : (
+                    <></>
+                )}
                 {!loaded && <ScreenshotPlaceholder />}
-                <Link href={url} target="_black">
-                    <img
-                        ref={(input) => {
-                            if (!input) {
-                                return
-                            }
+                {format == "gif" ? (
+                    <Link href={url} target="_black">
+                        <img
+                            ref={(input) => {
+                                if (!input) {
+                                    return
+                                }
 
-                            const img = input
+                                const img = input
 
-                            const updateFunc = () => {
-                                setLoaded(true)
-                            }
-                            img.onload = updateFunc
-                            if (img.complete) {
-                                updateFunc()
-                            }
-                        }}
-                        src={url}
-                        className={`rounded-lg border-muted-foreground ${
-                            !loaded && "hidden"
-                        }`}
-                    />
-                </Link>
+                                const updateFunc = () => {
+                                    setLoaded(true)
+                                }
+                                img.onload = updateFunc
+                                if (img.complete) {
+                                    updateFunc()
+                                }
+                            }}
+                            src={url}
+                            className={`rounded-lg border-muted-foreground ${
+                                !loaded && "hidden"
+                            }`}
+                        />
+                    </Link>
+                ) : (
+                    <></>
+                )}
             </div>
         </div>
     )
 }
 
-export function FullPageScreenshots() {
+export function ScrollingScreenshots() {
     const { toast } = useToast()
     const {
         register,
         handleSubmit,
         formState: { errors },
         control,
-    } = useForm<GenerateFullPageScreenshotRequest>({
-        resolver: zodResolver(GenerateFullPageScreenshotRequestSchema),
+    } = useForm<GenerateScrollingScreenshotRequest>({
+        resolver: zodResolver(GenerateScrollingScreenshotRequestSchema),
     })
 
     const [generating, setGenerating] = useState<boolean>(false)
-    const [screenshots, setScreenshots] = useState<ScreenshotData[]>([])
+    const [screenshots, setScreenshots] = useState<ScrollingScreenshot[]>([])
 
-    const onSubmit = async (data: GenerateFullPageScreenshotRequest) => {
+    const onSubmit = async (data: GenerateScrollingScreenshotRequest) => {
         setGenerating(true)
 
         try {
-            const response = await fetch("/tools/full-page-screenshots/api", {
+            const response = await fetch("/tools/scrolling-screenshots/api", {
                 method: "POST",
                 body: JSON.stringify(data),
             })
@@ -145,7 +212,7 @@ export function FullPageScreenshots() {
 
             if (response.ok) {
                 const result = (await response.json()) as {
-                    screenshots: ScreenshotData[]
+                    screenshots: ScrollingScreenshot[]
                 }
 
                 if (result.screenshots && result.screenshots.length > 0) {
@@ -206,6 +273,27 @@ export function FullPageScreenshots() {
                         </p>
                     )}
                 </div>
+                <div className="grid w-full items-center gap-1.5">
+                    <Label htmlFor="website">Format</Label>
+                    <Controller
+                        name="format"
+                        control={control}
+                        render={({
+                            field: { onChange, value, ref, ...props },
+                        }) => (
+                            <FormatSelect
+                                onValueChange={onChange}
+                                value={value}
+                                forwardedRef={ref}
+                            />
+                        )}
+                    />
+                    {errors.format && errors.format?.message && (
+                        <p className="text-sm text-destructive">
+                            {errors.device?.message}
+                        </p>
+                    )}
+                </div>
                 <Button type="submit" disabled={generating}>
                     {generating ? (
                         <>
@@ -226,6 +314,7 @@ export function FullPageScreenshots() {
                             viewportWidth={s.viewportWidth}
                             viewportHeight={s.viewportHeight}
                             device={s.device}
+                            format={s.format}
                         />
                     ))}
                 </div>
