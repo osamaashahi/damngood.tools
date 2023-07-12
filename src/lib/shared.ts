@@ -62,7 +62,6 @@ export const screenshotDevices: ScreenshotDevice[] = [
         viewportHeight: 428,
         deviceScaleFactor: 3,
     },
-
     {
         name: "Pixel 5 Landscape",
         viewportWidth: 851,

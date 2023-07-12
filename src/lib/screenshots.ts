@@ -29,13 +29,14 @@ export function screenshotUrl(
     url: string,
     viewportWidth: number,
     viewportHeight: number,
-    deviceScaleFactor: number
+    deviceScaleFactor: number,
+    fullPage?: boolean
 ) {
     const cacheKey =
         url == screenshotExampleUrl
             ? "example"
             : new String(new Date().getTime()).toString()
-    const cacheTtl = url == screenshotExampleUrl ? 2592000 : 14400;
+    const cacheTtl = url == screenshotExampleUrl ? 2592000 : 14400
 
     const options = screenshotone.TakeOptions.url(url)
         .blockChats(true)
@@ -49,12 +50,35 @@ export function screenshotUrl(
         .viewportWidth(viewportWidth)
         .viewportHeight(viewportHeight)
         .deviceScaleFactor(deviceScaleFactor)
+        .fullPage(!!fullPage)
 
     return screenshotoneClient.generateSignedTakeURL(options)
 }
 
 export async function generateExampleScreenshots(): Promise<Screenshot[]> {
     return await generateScreenshots(screenshotExampleUrl)
+}
+
+export async function generateFullPageScreenshots(
+    url: string,
+    deviceNames: string[]
+): Promise<Screenshot[]> {
+    return screenshotDevices
+        .filter((d) => deviceNames.includes(d.name))
+        .map((d) => {
+            return {
+                url: screenshotUrl(
+                    url,
+                    d.viewportWidth,
+                    d.viewportHeight,
+                    d.deviceScaleFactor,
+                    true
+                ),
+                viewportWidth: d.viewportWidth,
+                viewportHeight: d.viewportHeight,
+                device: d.name,
+            }
+        })
 }
 
 export async function generateScreenshots(url: string): Promise<Screenshot[]> {

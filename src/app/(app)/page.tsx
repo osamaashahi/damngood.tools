@@ -8,6 +8,7 @@ import {
     FileText,
     FileType,
     MessageSquare,
+    Monitor,
 } from "lucide-react"
 
 import { getCurrentUser } from "@/lib/session"
@@ -30,6 +31,12 @@ export default async function IndexPage() {
                 "Quickly test your website for popular screen dimensions.",
             icon: <Aperture />,
             link: "/tools/screenshots-for-dimensions",
+        },
+        {
+            name: "Full page screenshots",
+            description: "Render a full-page screenshot of any website.",
+            icon: <Monitor />,
+            link: "/tools/full-page-screenshots",
         },
         {
             name: "Fonts",
