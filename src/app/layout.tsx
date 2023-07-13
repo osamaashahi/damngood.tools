@@ -38,6 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <html lang="en" suppressHydrationWarning>
                 <head>
                     <Script
+                        id="crisp-chat"
                         strategy="afterInteractive"
                         type="text/javascript"
                         dangerouslySetInnerHTML={{
