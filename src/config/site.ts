@@ -9,6 +9,10 @@ export const siteConfig = {
             title: "All tools",
             href: "/",
         },
+        {
+            title: "Pricing",
+            href: "/pricing",
+        },
     ],
     links: {
         signIn: "/sign-in",
