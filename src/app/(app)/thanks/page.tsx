@@ -5,10 +5,10 @@ export default function ThankYouPage() {
         <>
             <PageHeader
                 heading="Thank You"
-                subheading="Thank you for supporting the product by buying premium access. "
+                subheading="Thank you for supporting the product by buying premium access."
             />
             <div className="max-w-[500px]">
-                In case you want to chat or have any questions, please don't
+                In case you want to chat or have any questions, please don&rsquo;t
                 hesitate to write to <strong>support@damngood.tools</strong>.
             </div>
         </>
