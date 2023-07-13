@@ -20,7 +20,7 @@ export default async function IndexPage() {
 
     const tools = [
         {
-            name: "Privacy policy",
+            name: "Privacy Policy Generator",
             description:
                 "Generate privacy policy in a few seconds according to your preferences.",
             icon: <FileCog2 />,
@@ -34,40 +34,40 @@ export default async function IndexPage() {
             link: "/tools/screenshots-for-dimensions",
         },
         {
-            name: "Full page screenshots",
+            name: "Full Page Screenshots",
             description: "Render a full-page screenshot of any website.",
             icon: <Monitor />,
             link: "/tools/full-page-screenshots",
         },
         {
-            name: "Scrolling screenshots",
+            name: "Scrolling Screenshots",
             description:
                 "Render a scrolling animated screenshot of any website.",
             icon: <FileVideo />,
             link: "/tools/scrolling-screenshots",
         },
         {
-            name: "Fonts",
+            name: "Detect Fonts",
             description:
                 "Quickly detect fonts used on any website and get links on how to install or download them.",
             icon: <FileType />,
             link: "/tools/detect-fonts",
         },
         {
-            name: "Chat with any PDF",
+            name: "Chat With Any PDF",
             description:
                 "Upload a PDF file and ask any questions about it. Let AI answer them.",
             icon: <FileSearch />,
             link: "/tools/chat-pdf",
         },
         {
-            name: "Summarize any URL",
+            name: "Summarize Any URL",
             description: "Quickly summarize any website or URL.",
             icon: <FileText />,
             link: "/tools/summarize-any-url",
         },
         {
-            name: "Grammar fixer",
+            name: "Grammar Fixer",
             description: "Fix the grammar of any text in one click.",
             icon: <FileCheck />,
             link: "/tools/grammar-fixer",
@@ -94,7 +94,7 @@ export default async function IndexPage() {
                 heading="Oh, these damn good tools"
                 subheading="Easy-to-use, fun tools—free (and open-source)."
             />
-            <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-3">
+            <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3">
                 {tools.map((tool, idx) => (
                     <div key={idx} className="p-4">
                         <Link
