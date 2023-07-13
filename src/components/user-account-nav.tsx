@@ -19,6 +19,7 @@ import { Icons } from "./icons"
 
 interface UserAccountNavProps {
     user?: {
+        id?: string | null
         premium: boolean
         email?: string | null
     }
@@ -45,7 +46,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
                     <DropdownMenuGroup>
                         <DropdownMenuItem>
                             <Link
-                                href={generateCheckoutUrl(user?.email)}
+                                href={generateCheckoutUrl(user?.id, user?.email)}
                                 target="_blank"
                                 className="flex flex-row gap-2 items-center"
                             >

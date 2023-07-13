@@ -40,7 +40,7 @@ export async function POST(req: Request) {
         const payload: any = JSON.parse(rawBody)
 
         if (payload.meta.event_name == "order_created") {
-            await handleOrder(payload.data)
+            await handleOrder(payload.data, payload.meta.custom_data)
         }
 
         return NextResponse.json({ message: "Webhook processed" })

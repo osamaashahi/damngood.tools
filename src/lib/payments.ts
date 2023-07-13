@@ -1,6 +1,6 @@
 import { db } from "./db"
 
-export async function handleOrder(order: any) {
+export async function handleOrder(order: any, customData: any) {
     if (order.attributes.status != "paid") {
         return
     }
@@ -10,7 +10,7 @@ export async function handleOrder(order: any) {
             premium: true,
         },
         where: {
-            email: order.attributes.user_email,
+            id: customData["user_id"],
         },
     })
 }

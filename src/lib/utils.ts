@@ -13,9 +13,12 @@ if (!process.env.NEXT_PUBLIC_LEMON_SQUEEZY_CHECKOUT_URL) {
 
 const checkoutUrl = process.env.NEXT_PUBLIC_LEMON_SQUEEZY_CHECKOUT_URL
 
-export function generateCheckoutUrl(email?: string | null) {
-    if (email) {
-        return `${checkoutUrl}?checkout[email]=${email}`
+export function generateCheckoutUrl(
+    userId?: string | null,
+    email?: string | null
+) {
+    if (email && userId) {
+        return `${checkoutUrl}?checkout[email]=${email}&checkout[custom][user_id]=${userId}`
     }
 
     return checkoutUrl
