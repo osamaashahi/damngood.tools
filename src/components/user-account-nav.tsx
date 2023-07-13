@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Github, LifeBuoy, LogOut, Zap } from "lucide-react"
 import { signOut } from "next-auth/react"
 
+import { generateCheckoutUrl } from "@/lib/utils"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -18,6 +19,7 @@ import { Icons } from "./icons"
 
 interface UserAccountNavProps {
     user?: {
+        premium: boolean
         email?: string | null
     }
 }
@@ -28,18 +30,31 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
             <DropdownMenuTrigger asChild>
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted cursor-pointer">
                     <span className="sr-only">{user?.email}</span>
-                    <Icons.user className="h-4 w-4" />
+
+                    <Icons.user
+                        className={`h-4 w-4 ${
+                            user?.premium && "text-red-500 dark:text-red-700"
+                        }`}
+                    />
                 </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <Zap className="mr-2 h-4 w-4 text-red-500 dark:text-red-700" />
-                        <span>Upgrade</span>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
+                {!user?.premium && <DropdownMenuSeparator />}
+                {!user?.premium && (
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem>
+                            <Link
+                                href={generateCheckoutUrl(user?.email)}
+                                target="_blank"
+                                className="flex flex-row gap-2 items-center"
+                            >
+                                <Zap className="h-4 w-4 text-red-500 dark:text-red-700" />
+                                <span>Upgrade to Premium</span>
+                            </Link>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem>
@@ -52,7 +67,19 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
                             GitHub
                         </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                        className="cursor-pointer"
+                        onSelect={(event) => {
+                            if (user?.email) {
+                                $crisp.push([
+                                    "set",
+                                    "user:email",
+                                    [user?.email],
+                                ])
+                                $crisp.push(["do", "chat:open"])
+                            }
+                        }}
+                    >
                         <LifeBuoy className="mr-2 h-4 w-4" />
                         <span>Support</span>
                     </DropdownMenuItem>

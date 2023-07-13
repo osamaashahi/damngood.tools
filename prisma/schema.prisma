@@ -46,6 +46,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
+  premium Boolean @default(false)
+
   @@map("users")
 }
 

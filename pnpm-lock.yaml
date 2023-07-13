@@ -80,6 +80,9 @@ dependencies:
   langchain:
     specifier: ^0.0.72
     version: 0.0.72(axios@1.4.0)(cheerio@1.0.0-rc.12)(encoding@0.1.13)(hnswlib-node@1.4.2)
+  lemonsqueezy.ts:
+    specifier: ^0.1.7
+    version: 0.1.7
   lucide-react:
     specifier: 0.105.0-alpha.4
     version: 0.105.0-alpha.4(react@18.2.0)
@@ -109,7 +112,7 @@ dependencies:
     version: 5.1.0(react@18.2.0)
   react-day-picker:
     specifier: ^8.6.0
-    version: 8.7.1(date-fns@2.29.3)(react@18.2.0)
+    version: 8.7.1(date-fns@2.30.0)(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
@@ -120,8 +123,8 @@ dependencies:
     specifier: ^6.2.2
     version: 6.2.2(react-dom@18.2.0)(react@18.2.0)
   resend:
-    specifier: ^0.15.3
-    version: 0.15.3
+    specifier: ^0.15.4
+    version: 0.15.4
   screenshotone-api-sdk:
     specifier: ^1.0.36
     version: 1.0.36(encoding@0.1.13)
@@ -146,7 +149,7 @@ devDependencies:
     specifier: ^2.0.1
     version: 2.0.1
   '@types/node':
-    specifier: ^17.0.12
+    specifier: ^17.0.45
     version: 17.0.45
   '@types/react':
     specifier: ^18.0.22
@@ -194,7 +197,7 @@ devDependencies:
     specifier: ^10.9.1
     version: 10.9.1(@types/node@17.0.45)(typescript@4.9.5)
   typescript:
-    specifier: ^4.9.3
+    specifier: ^4.9.5
     version: 4.9.5
 
 packages:
@@ -365,6 +368,13 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
+
+  /@babel/runtime@7.22.6:
+    resolution: {integrity: sha512-wDb5pWm4WDdF6LFUde3Jl8WzPA+3ZbxYqkC6xAXuD3irdEHN1k0NfTRrJD8ZD378SJ61miMLCqIOXYhd8x+AJQ==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.11
+    dev: false
 
   /@babel/template@7.20.7:
     resolution: {integrity: sha512-8SegXApWe6VoNw0r9JHpSteLKTpTiLZ4rMlGIm9JQ18KiCtyQiAMEazujAHrUS5flrcqYZa75ukev3P6QmUwUw==}
@@ -2439,9 +2449,11 @@ packages:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
     dev: true
 
-  /date-fns@2.29.3:
-    resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
+  /date-fns@2.30.0:
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
+    dependencies:
+      '@babel/runtime': 7.22.6
     dev: false
 
   /debug@3.2.7:
@@ -3828,6 +3840,13 @@ packages:
     resolution: {integrity: sha512-y+SqErxb8h7nE/fiEX07jsbuhrpO9lL8eca7/Y1nuWV2moNlXhyd59iDGcRf6moVyDMbmTNzL40SUyrFU/yDpg==}
     dev: false
 
+  /lemonsqueezy.ts@0.1.7:
+    resolution: {integrity: sha512-7COfsFaPVsz4ik6+b5hVI/PMyu6FE+PmrbNvk1G89P826XVRRnidVhDAes+Ed42RLyigc8bBHFbuUZSglPTO0g==}
+    engines: {node: '>=16.*'}
+    dependencies:
+      undici: 5.22.1
+    dev: false
+
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -4669,13 +4688,13 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-day-picker@8.7.1(date-fns@2.29.3)(react@18.2.0):
+  /react-day-picker@8.7.1(date-fns@2.30.0)(react@18.2.0):
     resolution: {integrity: sha512-Gv426AW8b151CZfh3aP5RUGztLwHB/EyJgWZ5iMgtzbFBkjHfG6Y66CIQFMWGLnYjsQ9DYSJRmJ5S0Pg5HWKjA==}
     peerDependencies:
       date-fns: ^2.28.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      date-fns: 2.29.3
+      date-fns: 2.30.0
       react: 18.2.0
     dev: false
 
@@ -4836,8 +4855,8 @@ packages:
       functions-have-names: 1.2.3
     dev: true
 
-  /resend@0.15.3:
-    resolution: {integrity: sha512-dzXHBaOjOS3ufBGjqiJjMe7LnproEn/jiAyBjg6IBtp56MCfih0O4IS4JeBcfj3y2Afm+tZITfoZAylKWLEJOg==}
+  /resend@0.15.4:
+    resolution: {integrity: sha512-QgQ1sMQ8CGtG5yWhPHUITsMmKxohoUiRo+s+8WpBbVhX3cJo87slUbDji2tqNgKz6Tza7fgd+cWNNQSYSeJDsA==}
     dependencies:
       '@react-email/render': 0.0.7
       axios: 1.4.0
@@ -5336,6 +5355,13 @@ packages:
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
     dev: true
+
+  /undici@5.22.1:
+    resolution: {integrity: sha512-Ji2IJhFXZY0x/0tVBXeQwgPlLWw13GVzpsWPQ3rV50IFMMof2I55PZZxtm4P6iNq+L5znYN9nSTAq0ZyE6lSJw==}
+    engines: {node: '>=14.0'}
+    dependencies:
+      busboy: 1.6.0
+    dev: false
 
   /update-browserslist-db@1.0.11(browserslist@4.21.5):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}

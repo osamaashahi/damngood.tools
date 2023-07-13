@@ -55,6 +55,7 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async session({ session, user }) {
             session.user.id = user.id
+            session.user.premium = user.premium
 
             return session
         },

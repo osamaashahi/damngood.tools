@@ -1,7 +1,6 @@
 import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
-import { getCurrentUser } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { MainNav } from "@/components/main-nav"
@@ -10,6 +9,7 @@ import { UserAccountNav } from "./user-account-nav"
 
 interface SiteHeaderProps {
     user?: {
+        premium: boolean
         email?: string | null
     }
 }
