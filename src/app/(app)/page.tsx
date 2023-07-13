@@ -94,14 +94,14 @@ export default async function IndexPage() {
                 heading="Oh, these damn good tools"
                 subheading="Easy-to-use, fun tools—free (and open-source)."
             />
-            <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2">
+            <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-3">
                 {tools.map((tool, idx) => (
                     <div key={idx} className="p-4">
                         <Link
                             href={tool.link}
-                            className="flex flex-row gap-2 text-primary"
+                            className="flex flex-row items-center gap-2 text-2xl font-bold tracking-tight"
                         >
-                            {tool.icon}
+                            <span className="text-red-500 dark:text-red-700">{tool.icon}</span>
                             <div className="relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100">
                                 {tool.name}
                             </div>
