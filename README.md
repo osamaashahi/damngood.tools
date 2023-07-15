@@ -23,6 +23,8 @@ The goal of this project for me is to have fun and explore my creativity. Expect
 
 * [Next.js](https://nextjs.org/) — the React framework for the web. 
 * [TypeScript](https://www.typescriptlang.org/) as the main language of the project.
+* [SQLite](https://www.sqlite.org/index.html) as the main database.
+* [Litestream](https://litestream.io/) for continuously streaming SQLite changes to AWS S3, Azure Blob Storage, Google Cloud Storage, SFTP, or NFS. 
 * [OpenAI APIs](https://platform.openai.com/docs/api-reference) for AI-based tools.
 * [ScreenshotOne](https://screenshotone.com/) for rendering website screenshots.
 * [GetURLData](https://geturldata.com/) for extracting website fonts and metadata.
