@@ -16,8 +16,11 @@ if (process.env.NODE_ENV === "production") {
     prisma = global.cachedPrisma
 }
 
-await (async function () {
+const initializePrisma = async () => {
     prisma.$queryRaw`PRAGMA busy_timeout = 5000;`
-})()
+}
+initializePrisma()
+    .then(() => {})
+    .catch((error) => console.error(error))
 
 export const db = prisma
