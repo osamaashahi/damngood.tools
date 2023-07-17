@@ -1,6 +1,11 @@
 import * as screenshotone from "screenshotone-api-sdk"
 
-import { Screenshot, ScrollingScreenshot, screenshotDevices, screenshotExampleUrl } from "./shared"
+import {
+    Screenshot,
+    ScrollingScreenshot,
+    screenshotDevices,
+    screenshotExampleUrl,
+} from "./shared"
 
 const globalForScreenshotOne = global as unknown as {
     screenshotoneClient: screenshotone.Client
@@ -60,13 +65,30 @@ export function scrollingScreenshotUrl(
     viewportWidth: number,
     viewportHeight: number,
     deviceScaleFactor: number,
-    format: string
+    format: string,
+    duration: number,
+    scrollBack: boolean,
+    scrollSpeed: "slow" | "medium" | "fast",
+    startImmediately: boolean
 ) {
     const cacheKey =
         url == screenshotExampleUrl
             ? "example"
             : new String(new Date().getTime()).toString()
     const cacheTtl = url == screenshotExampleUrl ? 2592000 : 14400
+
+    let scrollDuration = 1500;
+     switch (scrollSpeed) {
+        case 'slow': 
+            scrollDuration = 3000;
+            break;
+        case 'medium': 
+            scrollDuration = 1500;
+            break;
+        case 'fast': 
+            scrollDuration = 500;
+            break;
+     }
 
     const options = screenshotone.AnimateOptions.url(url)
         .blockChats(true)
@@ -81,6 +103,10 @@ export function scrollingScreenshotUrl(
         .viewportHeight(viewportHeight)
         .deviceScaleFactor(deviceScaleFactor)
         .scenario("scroll")
+        .duration(duration)
+        .scrollStartImmediately(startImmediately)
+        .scrollDuration(scrollDuration)
+        .scrollBack(scrollBack)
         .format(format)
 
     return screenshotoneClient.generateSignedAnimateURL(options)
@@ -115,7 +141,11 @@ export async function generateFullPageScreenshots(
 export async function generateScrollingScreenshots(
     url: string,
     deviceNames: string[],
-    format: string
+    format: string,
+    duration: number,
+    scrollBack: boolean,
+    scrollSpeed: "slow" | "medium" | "fast",
+    startImmediately: boolean
 ): Promise<ScrollingScreenshot[]> {
     return screenshotDevices
         .filter((d) => deviceNames.includes(d.name))
@@ -126,7 +156,11 @@ export async function generateScrollingScreenshots(
                     d.viewportWidth,
                     d.viewportHeight,
                     d.deviceScaleFactor,
-                    format
+                    format,
+                    duration,
+                    scrollBack,
+                    scrollSpeed,
+                    startImmediately
                 ),
                 format: format,
                 viewportWidth: d.viewportWidth,

@@ -18,7 +18,11 @@ export async function POST(request: NextRequest) {
             const screenshots = await generateScrollingScreenshots(
                 generateRequest.website,
                 [generateRequest.device],
-                generateRequest.format
+                generateRequest.format,
+                generateRequest.duration,
+                generateRequest.scrollBack,
+                generateRequest.scrollSpeed,
+                generateRequest.startImmediately
             )
 
             return NextResponse.json({

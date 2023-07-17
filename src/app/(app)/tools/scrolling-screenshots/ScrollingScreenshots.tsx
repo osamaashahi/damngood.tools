@@ -1,10 +1,10 @@
 "use client"
 
-import { Ref, forwardRef, useEffect, useState } from "react"
+import { Ref, forwardRef, useState } from "react"
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SelectProps } from "@radix-ui/react-select"
-import { ExternalLink, Loader2 } from "lucide-react"
+import { ExternalLink, Loader2, Lock } from "lucide-react"
 import { Controller, useForm } from "react-hook-form"
 
 import {
@@ -17,8 +17,17 @@ import {
     screenshotDevices,
 } from "@/lib/shared"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
     Select,
     SelectContent,
@@ -28,6 +37,8 @@ import {
 } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useToast } from "@/components/ui/use-toast"
+import { PaywallModal } from "@/components/premium-paywall/paywall-modal"
+import { PremiumLock } from "@/components/premium-paywall/premium-lock"
 
 const DeviceSelect = forwardRef(
     (
@@ -77,7 +88,35 @@ const FormatSelect = forwardRef(
         )
     }
 )
+
 FormatSelect.displayName = "FormatSelect"
+
+const SpeedSelect = forwardRef(
+    (
+        { ...props }: SelectProps & { forwardedRef: Ref<HTMLButtonElement> },
+        forwardedRef: Ref<HTMLButtonElement>
+    ) => {
+        return (
+            <Select {...props}>
+                <SelectTrigger className="w-full" ref={forwardedRef}>
+                    <SelectValue placeholder="Scroll speed" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem key="slow" value="slow">
+                        Slow
+                    </SelectItem>
+                    <SelectItem key="medium" value="medium">
+                        Medium
+                    </SelectItem>
+                    <SelectItem key="fast" value="fast">
+                        Fast
+                    </SelectItem>
+                </SelectContent>
+            </Select>
+        )
+    }
+)
+SpeedSelect.displayName = "SpeedSelect"
 
 const ScreenshotPlaceholder = () => {
     return (
@@ -186,15 +225,18 @@ const Screenshot = ({
     )
 }
 
-export function ScrollingScreenshots() {
+export function ScrollingScreenshots({ isPremium }: { isPremium: boolean }) {
     const { toast } = useToast()
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        control,
-    } = useForm<GenerateScrollingScreenshotRequest>({
+    const form = useForm<GenerateScrollingScreenshotRequest>({
         resolver: zodResolver(GenerateScrollingScreenshotRequestSchema),
+        defaultValues: {
+            duration: 5,
+            startImmediately: true,
+            scrollSpeed: "medium",
+            scrollBack: false,
+            format: "mp4",
+            device: "Desktop",
+        },
     })
 
     const [generating, setGenerating] = useState<boolean>(false)
@@ -234,77 +276,176 @@ export function ScrollingScreenshots() {
 
     return (
         <div className="flex flex-col md:flex-row gap-20">
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="flex max-w-[250px] flex-col gap-5 md:col-span-1"
-            >
-                <div className="grid w-full items-center gap-1.5">
-                    <Label htmlFor="website">Your website</Label>
-                    <Input
-                        type="url"
-                        id="website"
-                        placeholder="https://example.com"
-                        {...register("website")}
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="flex max-w-[250px] flex-col gap-5 md:col-span-1"
+                >
+                    <FormField
+                        control={form.control}
+                        name="website"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Your website</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        placeholder="http://example.com"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                    Enter any URL.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
                     />
-                    {errors.website && errors.website?.message && (
-                        <p className="text-sm text-destructive">
-                            {errors.website?.message}
-                        </p>
-                    )}
-                </div>
-                <div className="grid w-full items-center gap-1.5">
-                    <Label htmlFor="website">Device</Label>
-                    <Controller
+                    <FormField
+                        control={form.control}
                         name="device"
-                        control={control}
                         render={({
                             field: { onChange, value, ref, ...props },
                         }) => (
-                            <DeviceSelect
-                                onValueChange={onChange}
-                                value={value}
-                                forwardedRef={ref}
-                            />
+                            <FormItem>
+                                <FormLabel>Device</FormLabel>
+                                <FormControl>
+                                    <DeviceSelect
+                                        {...props}
+                                        onValueChange={onChange}
+                                        value={value}
+                                        forwardedRef={ref}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
                         )}
                     />
-                    {errors.device && errors.device?.message && (
-                        <p className="text-sm text-destructive">
-                            {errors.device?.message}
-                        </p>
-                    )}
-                </div>
-                <div className="grid w-full items-center gap-1.5">
-                    <Label htmlFor="website">Format</Label>
-                    <Controller
+                    <FormField
+                        control={form.control}
                         name="format"
-                        control={control}
                         render={({
                             field: { onChange, value, ref, ...props },
                         }) => (
-                            <FormatSelect
-                                onValueChange={onChange}
-                                value={value}
-                                forwardedRef={ref}
-                            />
+                            <FormItem>
+                                <FormLabel>Format</FormLabel>
+                                <FormControl>
+                                    <FormatSelect
+                                        {...props}
+                                        onValueChange={onChange}
+                                        value={value}
+                                        forwardedRef={ref}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
                         )}
                     />
-                    {errors.format && errors.format?.message && (
-                        <p className="text-sm text-destructive">
-                            {errors.device?.message}
-                        </p>
-                    )}
-                </div>
-                <Button type="submit" disabled={generating}>
-                    {generating ? (
-                        <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Please wait
-                        </>
-                    ) : (
-                        "Render"
-                    )}
-                </Button>
-            </form>
+                    <FormField
+                        control={form.control}
+                        name="duration"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Duration</FormLabel>
+                                <FormControl>
+                                    <div className="flex flex-row gap-2 items-center">
+                                        <Input
+                                            type="number"
+                                            id="duration"
+                                            placeholder="5"
+                                            disabled={!isPremium}
+                                            readOnly={!isPremium}
+                                            max={30}
+                                            min={3}
+                                            step={1}
+                                            {...field}
+                                        />
+                                        {!isPremium && <PremiumLock />}
+                                    </div>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="startImmediately"
+                        render={({ field }) => (
+                            <FormItem className="flex flex-row items-center gap-2 space-y-0">
+                                <FormControl>
+                                    <Checkbox
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange}
+                                        disabled={!isPremium}
+                                    />
+                                </FormControl>
+                                <div className="flex items-center gap-2">
+                                    <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                        Start immediately
+                                    </FormLabel>
+                                    {!isPremium && <PremiumLock />}
+                                </div>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="scrollBack"
+                        render={({ field }) => (
+                            <FormItem className="flex flex-row items-center gap-2 space-y-0">
+                                <FormControl>
+                                    <Checkbox
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange}
+                                        disabled={true}
+                                    />
+                                </FormControl>
+                                <div className="flex items-center gap-2">
+                                    <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                        Scroll back
+                                    </FormLabel>
+                                    {!isPremium && <PremiumLock />}
+                                </div>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="scrollSpeed"
+                        render={({
+                            field: { onChange, value, ref, ...props },
+                        }) => (
+                            <FormItem>
+                                <FormLabel>Scroll speed</FormLabel>
+                                <FormControl>
+                                    <div className="flex flex-row items-center gap-2">
+                                        <SpeedSelect
+                                            {...props}
+                                            disabled={!isPremium}
+                                            onValueChange={onChange}
+                                            value={value}
+                                            forwardedRef={ref}
+                                        />
+                                        {!isPremium && <PremiumLock />}
+                                    </div>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button type="submit" disabled={generating}>
+                        {generating ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Please wait
+                            </>
+                        ) : (
+                            "Render"
+                        )}
+                    </Button>
+                </form>
+            </Form>
             <div className="flex-grow">
                 <div className="flex md:mx-auto max-w-[400px] md:max-w-[800px]">
                     {screenshots.map((s) => (
@@ -319,6 +460,7 @@ export function ScrollingScreenshots() {
                     ))}
                 </div>
             </div>
+            <PaywallModal />
         </div>
     )
 }
