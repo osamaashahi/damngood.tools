@@ -17,7 +17,7 @@ import { PageHeader } from "@/components/page-header"
 
 export default async function IndexPage() {
     const u = await getCurrentUser()
-
+    
     const tools = [
         {
             name: "Privacy Policy Generator",

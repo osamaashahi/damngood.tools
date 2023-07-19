@@ -11,18 +11,24 @@ export default function PricingPage() {
             price: "$0",
             href: "/",
             subtitle: "enjoy basic features",
+            highlight: false,
+            callToAction: "Get Started",
         },
         {
             name: "Premium",
             price: "$45",
             href: "/sign-up",
             subtitle: "a one-time payment",
+            highlight: true,
+            callToAction: "Get Started",
         },
         {
             name: "Open-Source",
             price: "Your Time",
             href: "https://github.com/krasun/damngood.tools",
             subtitle: "host yourself",
+            highlight: false,
+            callToAction: "Check Out",
         },
     ]
 
@@ -39,9 +45,13 @@ export default function PricingPage() {
                     payment once you need it.
                 </p>
             </div>
-            <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5 px-20">
+            <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5 px-10 sm:px-20">
                 {pricingPlans.map((p) => (
-                    <div className="shadow dark:border dark:border-slate-800 rounded-3xl flex flex-col items-center md:p-5">
+                    <div
+                        className={`shadow dark:border dark:border-slate-800 rounded-3xl flex flex-col items-center p-5 ${
+                            p.highlight && "shadow-lg"
+                        }`}
+                    >
                         <div className="text-sm">{p.name}</div>
                         <div className="mt-5 text-3xl font-bold tracking-tight">
                             {p.price}
@@ -58,7 +68,7 @@ export default function PricingPage() {
                                     variant: "default",
                                 })} w-full`}
                             >
-                                Get Started
+                                {p.callToAction}
                             </Link>
                         </div>
                     </div>
