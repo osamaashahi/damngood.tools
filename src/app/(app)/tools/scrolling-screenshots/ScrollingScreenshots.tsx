@@ -8,10 +8,6 @@ import { ExternalLink, Loader2, Lock } from "lucide-react"
 import { Controller, useForm } from "react-hook-form"
 
 import {
-    GenerateScrollingScreenshotRequest,
-    GenerateScrollingScreenshotRequestSchema,
-} from "@/lib/schema"
-import {
     Screenshot as ScreenshotData,
     ScrollingScreenshot,
     screenshotDevices,
@@ -39,6 +35,13 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useToast } from "@/components/ui/use-toast"
 import { PaywallModal } from "@/components/premium-paywall/paywall-modal"
 import { PremiumLock } from "@/components/premium-paywall/premium-lock"
+
+import {
+    GenerateScrollingScreenshotRequest,
+    GenerateScrollingScreenshotRequestSchema,
+    defaultValues,
+    premiumProperties,
+} from "./schema"
 
 const DeviceSelect = forwardRef(
     (
@@ -229,14 +232,7 @@ export function ScrollingScreenshots({ isPremium }: { isPremium: boolean }) {
     const { toast } = useToast()
     const form = useForm<GenerateScrollingScreenshotRequest>({
         resolver: zodResolver(GenerateScrollingScreenshotRequestSchema),
-        defaultValues: {
-            duration: 5,
-            startImmediately: true,
-            scrollSpeed: "medium",
-            scrollBack: false,
-            format: "mp4",
-            device: "Desktop",
-        },
+        defaultValues,
     })
 
     const [generating, setGenerating] = useState<boolean>(false)
@@ -352,14 +348,21 @@ export function ScrollingScreenshots({ isPremium }: { isPremium: boolean }) {
                                             type="number"
                                             id="duration"
                                             placeholder="5"
-                                            disabled={!isPremium}
-                                            readOnly={!isPremium}
+                                            disabled={
+                                                premiumProperties.duration &&
+                                                !isPremium
+                                            }
+                                            readOnly={
+                                                premiumProperties.duration &&
+                                                !isPremium
+                                            }
                                             max={30}
                                             min={3}
                                             step={1}
                                             {...field}
                                         />
-                                        {!isPremium && <PremiumLock />}
+                                        {premiumProperties.duration &&
+                                            !isPremium && <PremiumLock />}
                                     </div>
                                 </FormControl>
                                 <FormMessage />
@@ -375,14 +378,18 @@ export function ScrollingScreenshots({ isPremium }: { isPremium: boolean }) {
                                     <Checkbox
                                         checked={field.value}
                                         onCheckedChange={field.onChange}
-                                        disabled={!isPremium}
+                                        disabled={
+                                            premiumProperties.startImmediately &&
+                                            !isPremium
+                                        }
                                     />
                                 </FormControl>
                                 <div className="flex items-center gap-2">
                                     <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                         Start immediately
                                     </FormLabel>
-                                    {!isPremium && <PremiumLock />}
+                                    {premiumProperties.startImmediately &&
+                                        !isPremium && <PremiumLock />}
                                 </div>
                                 <FormMessage />
                             </FormItem>
@@ -397,14 +404,18 @@ export function ScrollingScreenshots({ isPremium }: { isPremium: boolean }) {
                                     <Checkbox
                                         checked={field.value}
                                         onCheckedChange={field.onChange}
-                                        disabled={true}
+                                        disabled={
+                                            premiumProperties.scrollBack &&
+                                            !isPremium
+                                        }
                                     />
                                 </FormControl>
                                 <div className="flex items-center gap-2">
                                     <FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                         Scroll back
                                     </FormLabel>
-                                    {!isPremium && <PremiumLock />}
+                                    {premiumProperties.scrollBack &&
+                                        !isPremium && <PremiumLock />}
                                 </div>
                                 <FormMessage />
                             </FormItem>
@@ -422,12 +433,16 @@ export function ScrollingScreenshots({ isPremium }: { isPremium: boolean }) {
                                     <div className="flex flex-row items-center gap-2">
                                         <SpeedSelect
                                             {...props}
-                                            disabled={!isPremium}
+                                            disabled={
+                                                premiumProperties.scrollSpeed &&
+                                                !isPremium
+                                            }
                                             onValueChange={onChange}
                                             value={value}
                                             forwardedRef={ref}
                                         />
-                                        {!isPremium && <PremiumLock />}
+                                        {premiumProperties.scrollSpeed &&
+                                            !isPremium && <PremiumLock />}
                                     </div>
                                 </FormControl>
                                 <FormMessage />

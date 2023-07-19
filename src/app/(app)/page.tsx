@@ -1,24 +1,27 @@
 import Link from "next/link"
 import {
     Aperture,
-    Bot,
     FileCheck,
     FileCog2,
     FileSearch,
     FileText,
     FileType,
-    FileVideo,
     MessageSquare,
     Monitor,
 } from "lucide-react"
 
 import { getCurrentUser } from "@/lib/session"
+import { Tool } from "@/lib/tools"
 import { PageHeader } from "@/components/page-header"
+
+import { tool } from "./tools/scrolling-screenshots/tool"
 
 export default async function IndexPage() {
     const u = await getCurrentUser()
-    
-    const tools = [
+
+    const tools: Tool[] = [tool]
+
+    const allTools = [
         {
             name: "Privacy Policy Generator",
             description:
@@ -38,13 +41,6 @@ export default async function IndexPage() {
             description: "Render a full-page screenshot of any website.",
             icon: <Monitor />,
             link: "/tools/full-page-screenshots",
-        },
-        {
-            name: "Scrolling Screenshots",
-            description:
-                "Render a scrolling animated screenshot of any website.",
-            icon: <FileVideo />,
-            link: "/tools/scrolling-screenshots",
         },
         {
             name: "Detect Fonts",
@@ -79,13 +75,12 @@ export default async function IndexPage() {
             icon: <MessageSquare />,
             link: "/tools/damn-good-chat",
         },
-        // {
-        //     name: "GPT4All Chat",
-        //     description:
-        //         "Chat with an free and open-source alternative GPT model.",
-        //     icon: <Bot />,
-        //     link: "/tools/gpt4all-chat",
-        // },
+        ...tools.map((t) => {
+            return {
+                ...t,
+                link: `/tools/${t.slug}`,
+            }
+        }),
     ]
 
     return (
@@ -95,8 +90,11 @@ export default async function IndexPage() {
                 subheading="Easy-to-use, fun tools—free (and open-source)."
             />
             <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3">
-                {tools.map((tool, idx) => (
-                    <div key={idx} className="p-5 shadow rounded-[12px] dark:shadow-slate-900">
+                {allTools.map((tool, idx) => (
+                    <div
+                        key={idx}
+                        className="p-5 shadow rounded-[12px] dark:shadow-slate-900"
+                    >
                         <Link
                             href={tool.link}
                             className="flex flex-row items-center gap-2 text-2xl font-bold tracking-tight"

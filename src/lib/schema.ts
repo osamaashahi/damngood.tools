@@ -20,19 +20,6 @@ export type GenerateFullPageScreenshotRequest = z.infer<
     typeof GenerateFullPageScreenshotRequestSchema
 >
 
-export const GenerateScrollingScreenshotRequestSchema = z.object({
-    website: z.string().url(),
-    device: z.string(),
-    format: z.enum(["webp", "mp4", "gif"]),
-    duration: z.number().int().min(3).max(30),
-    scrollBack: z.boolean(),
-    startImmediately: z.boolean(),
-    scrollSpeed: z.enum(["slow", "medium", "fast"]),
-})
-export type GenerateScrollingScreenshotRequest = z.infer<
-    typeof GenerateScrollingScreenshotRequestSchema
->
-
 export const SummarizeURLRequestSchema = z.object({
     website: z.string().url(),
 })

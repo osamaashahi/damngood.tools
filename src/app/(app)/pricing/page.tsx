@@ -1,8 +1,7 @@
 import Link from "next/link"
 
 import { fontHeading } from "@/lib/fonts"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { PageHeader } from "@/components/page-header"
+import { buttonVariants } from "@/components/ui/button"
 
 export default function PricingPage() {
     const pricingPlans = [
