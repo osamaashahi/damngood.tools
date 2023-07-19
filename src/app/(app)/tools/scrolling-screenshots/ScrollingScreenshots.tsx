@@ -4,8 +4,8 @@ import { Ref, forwardRef, useState } from "react"
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SelectProps } from "@radix-ui/react-select"
-import { ExternalLink, Loader2, Lock } from "lucide-react"
-import { Controller, useForm } from "react-hook-form"
+import { ExternalLink, Loader2 } from "lucide-react"
+import { useForm } from "react-hook-form"
 
 import {
     Screenshot as ScreenshotData,

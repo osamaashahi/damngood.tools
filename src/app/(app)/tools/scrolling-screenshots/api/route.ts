@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
 
+import { generateScrollingScreenshots } from "@/lib/screenshots"
+
 import {
     GenerateScrollingScreenshotRequest,
     GenerateScrollingScreenshotRequestSchema,
-} from "@/lib/schema"
-import { generateScrollingScreenshots } from "@/lib/screenshots"
+} from "../schema"
 
 export async function POST(request: NextRequest) {
     try {
